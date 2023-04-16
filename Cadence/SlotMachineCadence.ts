@@ -81,8 +81,44 @@ const slotMachineCadences: RoundsCadences = { roundOne: [], roundTwo: [], roundT
  * @returns SlotCadence Array of numbers representing the slot machine stop cadence.
  */
 function slotCadence(symbols: Array<SlotCoordinate>): SlotCadence {
-  // Magic
-  return [];
+  
+  const columnSize = anticipatorConfig.columnSize;
+  const minToAnticipate = anticipatorConfig.minToAnticipate;
+  const maxToAnticipate = anticipatorConfig.maxToAnticipate;
+  const anticipateCadence = anticipatorConfig.anticipateCadence;
+  const defaultCadence = anticipatorConfig.defaultCadence;
+
+  const cadenceArr: SlotCadence = [];
+
+  //Initialize cadenceArr with time 0
+  cadenceArr.push(0);
+  let lastTime = 0;
+  let numSymbolsFound = 0;
+
+
+  for(let i = 0; i < columnSize - 1; i++) {
+    // checks if there are special symbols in the current column
+    if (symbols.some((s) => s.column === i)) {
+    
+      // checks how many special symbols there are in the current column and adds it to the amount found so far
+      let symbolAmountToAdd =symbols.filter((s) => s.column === i).length;
+      numSymbolsFound += symbolAmountToAdd;
+
+    }
+
+    // checks if the amount of special symbols found so far is within the range 
+    // to use the anticipateCadence or out of it, to use the defaultCadence
+    if (numSymbolsFound >= minToAnticipate && numSymbolsFound < maxToAnticipate) {
+      lastTime += anticipateCadence;
+      cadenceArr.push(lastTime)
+    } else {
+      lastTime += defaultCadence;
+      cadenceArr.push(lastTime)
+    }
+    
+  }
+
+  return cadenceArr;
 }
 
 /**

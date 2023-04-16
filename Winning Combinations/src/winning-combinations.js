@@ -17,17 +17,17 @@ function getPaylines(symbolPositions) {
     if (tempSubarray.length > 0) {
         subArrays.push(tempSubarray);
     }
-    // must have at least 3 consecutive ocurrences of a symbol to be considered a payline
+    // must have at least 3 consecutive occurrences of a symbol to be considered a payline
     var payLines = subArrays.filter(function (s) { return s.length >= 3; });
-    // this implementations assumes there can't be more than one payline of a given symbol, 
-    // since there are max 6 positions and a payline needs at least 3 consecutive ocurrences
+    // this implementation assumes there can't be more than one payline of a given symbol, 
+    // since there are max 6 positions and a payline needs at least 3 consecutive occurrences
     if (payLines.length) {
         return payLines[0];
     }
     return [];
 }
 function call(lines) {
-    // Since the paying symbols are all integers from 0 to 9, we could also create the array using:
+    // since the paying symbols are all integers from 0 to 9, we could also create the array using:
     // const payingSymbols = Array.from({ length: 10 }, (_, index) => index);
     var payingSymbols = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
     var symbolsFound = [];

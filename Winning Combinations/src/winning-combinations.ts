@@ -20,11 +20,11 @@ function getPaylines(symbolPositions: Array<number>): Array<number> {
     subArrays.push(tempSubarray);
   }
 
-  // must have at least 3 consecutive ocurrences of a symbol to be considered a payline
+  // must have at least 3 consecutive occurrences of a symbol to be considered a payline
   const payLines = subArrays.filter((s) => s.length >= 3); 
   
-  // this implementations assumes there can't be more than one payline of a given symbol, 
-  // since there are max 6 positions and a payline needs at least 3 consecutive ocurrences
+  // this implementation assumes there can't be more than one payline of a given symbol, 
+  // since there are max 6 positions and a payline needs at least 3 consecutive occurrences
   if (payLines.length) {
     return payLines[0]; 
   }
@@ -38,15 +38,15 @@ function call(lines: Array<number>): WinningCombinationsResult {
   // const payingSymbols = Array.from({ length: 10 }, (_, index) => index);
   const payingSymbols = [0,1,2,3,4,5,6,7,8,9];
   
-  const symbolsFound = [];
-  const symbolsPositions = [];
+  const symbolsFound: Array<number> = [];
+  const symbolsPositions: Array<Array<number>> = [];
 
   // get paying symbols found and their positions (including the wild number 0, for each symbol).
   // If there are less than 3 positions we can discard the symbol because we need at least 3 for a payline
   for (let i = 0; i < payingSymbols.length; i++) {
     if (lines.includes(payingSymbols[i])) {
       const targetElements = [0, payingSymbols[i]];
-      const positions = lines.reduce((acc: number[], curr, index) => {
+      const positions = lines.reduce((acc: Array<number>, curr, index) => {
         if (targetElements.includes(curr)) {
           acc.push(index);
         }
